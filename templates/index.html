@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>タスク管理</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <h1 style="text-align: center">タスク管理</h1>
+  {% if tasks|length < 1 %}
+  <h4 style="text-align: center">タスクがありません。以下から作成してください</h4>
+  {% else %}
+  <table>
+    <tr>
+      <th>タスク</th>
+      <th>追加</th>
+      <th>アクション</th>
+    </tr>
+    {% for task in tasks %}
+      <tr>
+        <td>{{ task.content }}</td>
+        <td>{{ task.date_created.date() }}</td>
+        <td>
+          <a href="/delete/{{ task.id }}">削除</a>
+          <br>
+          <a href="/update/{{ task.id }}">更新</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  <form action="/" method="POST">
+    <input type="text" name="content" id="content">
+    <input type="submit" value="タスクを追加">
+  </form>
+</div>
+{% endblock %}
